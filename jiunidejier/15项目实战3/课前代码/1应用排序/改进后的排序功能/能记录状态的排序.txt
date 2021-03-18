@@ -1,0 +1,50 @@
+1. 用变量记录当前排序
+    public static final int SORT_NAME = 0;//按名称排序
+    public static final int SORT_DATE = 1;//按日期排序
+    public static final int SORT_SIZE = 2;//按大小排序
+
+    int currSort = SORT_NAME;//当前排序
+    Comparator<AppInfo> currComparator = null;//当前比较器
+--------------------------
+2. 更改对列表进行排序的方法
+    // 更新应用列表(排序后)
+    private void updateData_sort(int sort) {
+
+        if (sort == SORT_NAME) {
+            currComparator = nameComparator;
+        }
+        if (sort == SORT_DATE) {
+            currComparator = dateComparator;
+        }
+        if (sort == SORT_SIZE) {
+            currComparator = sizeComparator;
+        }
+        Collections.sort(list,currComparator);//排序
+        adapter.setList(list);
+        adapter.notifyDataSetChanged();
+    }
+---------------------------------------
+3. 对onOptionsItemSelected改进
+        //判断菜单项的id
+        if (id == R.id.sort_name) {
+            currSort = SORT_NAME;
+        }
+        if (id == R.id.sort_date) {
+            currSort = SORT_DATE;
+        }
+        if (id == R.id.sort_size) {
+            currSort = SORT_SIZE;
+        }
+        //更新应用列表
+        updateData_sort(currSort);
+-----------------------
+4. 更改Handler的处理方法
+ Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                updateData_sort(currSort);
+                pd.dismiss();// 关闭进度框
+            }
+        }
+    };

@@ -1,0 +1,11 @@
+AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       
+                .setIcon(R.drawable.ic_launcher);
+                .setTitle("消息提示");
+                .setMessage("这是一个最简单的对话框，仅仅提示一些信息");
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //点击确定后的逻辑
+                        showMsg("好的，知道了");
+                    }
+                });

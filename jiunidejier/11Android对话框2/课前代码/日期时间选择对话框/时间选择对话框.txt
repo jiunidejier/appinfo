@@ -1,0 +1,22 @@
+    public void btnClick(View v) {
+
+        Calendar c = Calendar.getInstance();
+        // 创建一个TimePickerDialog实例，并把它显示出来。
+        new TimePickerDialog(this,
+                // 绑定监听器
+                new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker tp, int hourOfDay,
+                                          int minute) {
+                        String text = "您选择了：" + hourOfDay + "时" + minute
+                                + "分";
+                        Toast.makeText(MainActivity7.this, text,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+                //设置初始时间
+                , c.get(Calendar.HOUR_OF_DAY)
+                , c.get(Calendar.MINUTE)
+                //true表示采用24小时制
+                , true).show();
+    }

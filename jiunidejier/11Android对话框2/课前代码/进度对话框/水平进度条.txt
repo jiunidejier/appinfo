@@ -1,0 +1,49 @@
+  Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 0){
+                pd.dismiss();
+            }else if (msg.what == 1){
+                pd.setProgress(msg.arg1);
+            }
+
+        }
+    };
+
+    ProgressDialog pd;
+
+    public void btnClick(View v){
+
+        showProgress();
+        new Thread(){
+            @Override
+            public void run() {
+                // 耗时操作
+                for (int i = 1; i<=10; i++){
+                    try {
+
+                        Message msg = Message.obtain();
+                        msg.arg1 = i;
+                        msg.what = 1;
+                        handler.sendMessage(msg);
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                handler.sendEmptyMessage(0);
+            }
+        }.start();
+
+    }
+
+    public void showProgress(){
+        pd = new ProgressDialog(this);
+        pd.setTitle("任务执行中");
+        pd.setMessage("任务执行中,请稍候...");
+        pd.setCancelable(true);
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMax(10);
+        pd.setIndeterminate(false);
+        pd.show();
+    }

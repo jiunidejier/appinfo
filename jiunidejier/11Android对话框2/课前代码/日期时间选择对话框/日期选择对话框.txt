@@ -1,0 +1,21 @@
+    public void btnClick(View v) {
+
+        Calendar c = Calendar.getInstance();
+        // 直接创建一个DatePickerDialog对话框实例，并将它显示出来
+        new DatePickerDialog(this,
+                // 绑定监听器
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker dp, int year,
+                                          int month, int dayOfMonth) {
+                        String text = "您选择了：" + year + "年" + (month + 1)
+                                + "月" + dayOfMonth + "日";
+                        Toast.makeText(MainActivity7.this, text,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+                //设置初始日期
+                , c.get(Calendar.YEAR)
+                , c.get(Calendar.MONTH)
+                , c.get(Calendar.DAY_OF_MONTH)).show();
+    }

@@ -1,0 +1,36 @@
+﻿package com.tangcco.appmanager.entity;
+
+import android.graphics.drawable.Drawable;
+
+import com.tangcco.appmanager.util.Utils;
+
+/**
+ * 应用信息的实体类.
+ */
+public class AppInfo {
+
+    public String packageName;
+    public String versionName;
+    public int versionCode;
+    public long firstInstallTime;
+    public long lastUpdateTime;
+    public String AppName;
+    public Drawable icon;
+    public long byteSize;
+    public String size;
+
+    @Override
+    public String toString() {
+        return "\nAppInfo{" +
+                "packageName='" + packageName + '\'' +
+                ", versionName='" + versionName + '\'' +
+                ", versionCode=" + versionCode +
+                ", firstInstallTime=" + Utils.getTime(firstInstallTime) +
+                ", lastUpdateTime=" + Utils.getTime(lastUpdateTime) +
+                ", AppName='" + AppName + '\'' +
+                ", icon=" + icon +
+                ", byteSize=" + byteSize +
+                ", size='" + size + '\'' +
+                '}';
+    }
+}

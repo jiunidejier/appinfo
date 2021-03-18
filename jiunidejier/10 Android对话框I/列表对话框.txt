@@ -1,0 +1,11 @@
+        final String[] arr = {"初始Android","开发环境搭建","基础控件I","基础控件II"};
+        new AlertDialog.Builder(this)
+        .setIcon(R.drawable.ic_launcher)
+        .setTitle("Android基础课")
+        .setItems(arr, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this,"您选择了:"+arr[which],Toast.LENGTH_SHORT).show();
+            }
+        })
+        .show();

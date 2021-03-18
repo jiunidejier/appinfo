@@ -1,0 +1,18 @@
+    Dialog dialog;// ÉùÃ÷¶Ô»°¿ò
+
+    public void btnClick(View v){
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final View mMyView = inflater.inflate(R.layout.layout_myself_dialog, null);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setView(mMyView);
+        mMyView.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog = builder.create();
+        dialog.show();
+    }

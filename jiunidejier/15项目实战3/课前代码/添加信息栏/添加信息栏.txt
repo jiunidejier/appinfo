@@ -1,0 +1,83 @@
+1. 在布局文件中添加信息栏
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+
+    <!-- 顶部信息栏 -->
+    <LinearLayout
+        android:id="@+id/top"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+
+        <TextView
+            android:id="@+id/tv_size"
+            android:text="应用数:"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#666"/>
+
+        <TextView
+            android:id="@+id/tv_sort"
+            android:text="排序:"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textColor="#666"/>
+
+
+    </LinearLayout>
+
+
+
+    <ListView
+        android:id="@+id/lv_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/item_selector"
+        android:layout_below="@id/top"
+        />
+
+</RelativeLayout>
+----------------------------------
+2. 定义并初始化2个文本控件
+
+ TextView tv_size; // 显示应用数
+    TextView tv_sort; // 显示当前排序
+
+        tv_size = (TextView) findViewById(R.id.tv_size);
+        tv_sort = (TextView) findViewById(R.id.tv_sort);
+--------------------------------------
+3. 编写更新方法
+
+    // 更新顶部信息栏
+    private void update_topInfo(){
+        tv_size.setText("应用数:"+list.size());
+        tv_sort.setText("排序:"+ARR_SORT[currSort]);
+    }
+------------------------------------
+4. 调用
+    private void update_sort(int sort){
+
+        //判断id
+        if (sort == SORT_NAME){
+            currComparator = nameComparator;
+        }
+        if (sort == SORT_DATE){
+            currComparator = dateComparator;
+        }
+        if (sort == SORT_SIZE){
+            currComparator = sizeComparator;
+        }
+        Collections.sort(list,currComparator);// 排序
+        adapter.setList(list);
+        adapter.notifyDataSetChanged();
+        update_topInfo();
+    }

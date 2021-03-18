@@ -1,0 +1,30 @@
+    /**
+     * 打开应用
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public static boolean openPackage(Context context, String packageName) {
+
+        try {
+            Intent intent =// 获取可以启动该应用的意图
+                    context.getPackageManager().getLaunchIntentForPackage(packageName);
+            if (intent != null) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);//在新的进程里启动
+                context.startActivity(intent);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+-------------------------------------------------------
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // 获取本行的应用信息对象
+        AppInfo app = (AppInfo) parent.getItemAtPosition(position);
+        // 运行应用
+        Utils.openPackage(this, app.packageName);
+    }
+--------------------------------------------------------

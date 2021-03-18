@@ -1,0 +1,58 @@
+测试高亮功能
+        String str1 = "应用数:"+list.size();
+        SpannableStringBuilder style = new SpannableStringBuilder(str1);
+        style.setSpan(
+                new ForegroundColorSpan(Color.RED),// 前景样式
+                1,// 起始坐标
+                2,// 终止坐标
+                Spannable.SPAN_EXCLUSIVE_INCLUSIVE// 旗标
+        );
+        tv_size.setText(style);
+--------------------------------------
+设置全局变量
+    public static String KEYWORD; // 全局变量:搜索关键字
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        // 提交事件
+        list = Utils.getSearchList(list,query);
+        KEYWORD = query;
+        update_sort(currSort);
+        return true;
+    }
+--------------------
+清空全局变量
+    // 3. 子线程
+    private void updateData(){
+
+        new Thread(){
+            @Override
+            public void run() {
+                // 耗时
+                list = Utils.getAppList(MainActivity.this);
+
+                KEYWORD = null;// 将KEYWORD清空
+                handler.sendEmptyMessage(1);
+            }
+        }.start();// 子线程
+        showProgressDialog();// UI
+
+    }
+------------------------------------
+在适配器中添加代码
+        String key = MainActivity.KEYWORD;
+        if (key != null && !key.equals("") ) {
+            int start = app.appName.toLowerCase().indexOf(key.toLowerCase());//
+            int end = start + key.length();
+            // 标题
+            SpannableStringBuilder style = new SpannableStringBuilder(app.appName);
+            style.setSpan(
+                    new ForegroundColorSpan(Color.RED),// 前景样式
+                    start,// 起始坐标
+                    end,// 终止坐标
+                    Spannable.SPAN_EXCLUSIVE_INCLUSIVE// 旗标
+            );
+            holder.title.setText(style);
+        }else{
+            holder.title.setText(app.appName);
+        }

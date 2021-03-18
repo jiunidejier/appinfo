@@ -1,0 +1,36 @@
+// 日期比较器
+    Comparator<AppInfo> dateComparator = new Comparator<AppInfo>() {
+        @Override
+        public int compare(AppInfo lhs, AppInfo rhs) {
+            if(rhs.lastUpdateTime > lhs.lastUpdateTime){
+                return 1;
+            }else if(rhs.lastUpdateTime == lhs.lastUpdateTime){
+                return 0;
+            }else{
+                return -1;
+            }
+
+        }
+    };
+
+    // 大小比较器
+    Comparator<AppInfo> sizeComparator = new Comparator<AppInfo>() {
+        @Override
+        public int compare(AppInfo lhs, AppInfo rhs) {
+            if(rhs.byteSize > lhs.byteSize){
+                return 1;
+            }else if(rhs.byteSize == lhs.byteSize){
+                return 0;
+            }else{
+                return -1;
+            }
+        }
+    };
+
+    // 应用名比较器
+    Comparator<AppInfo> nameComparator = new Comparator<AppInfo>() {
+        @Override
+        public int compare(AppInfo lhs, AppInfo rhs) {
+            return lhs.AppName.compareTo(rhs.AppName);
+        }
+    };

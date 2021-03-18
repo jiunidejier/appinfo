@@ -1,0 +1,17 @@
+    <!-- 刷新 -->
+    <item
+        android:id="@+id/btn_refresh"
+        android:title="刷新"
+        android:icon="@drawable/bottom_icon_refresh"
+        android:showAsAction="ifRoom" />
+-----------------------------------------
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // 处理ActionBar的item点击事件
+        int id = item.getItemId();
+
+        // "刷新的点击事件"
+        if (id == R.id.btn_refresh) {
+            updateData();
+            return true;
+        }

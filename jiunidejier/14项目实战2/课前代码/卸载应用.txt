@@ -1,0 +1,53 @@
+    /**
+     * 卸载程序
+     * @param context
+     * @param packageName
+     * @return
+     */
+    public static void uninstallApk(Activity context, String packageName,int requestCode) {
+        Uri packageURI = Uri.parse("package:" + packageName);
+        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+        context.startActivityForResult(uninstallIntent, requestCode);
+    }
+----------------------------------
+public interface IUninstall {
+
+    /**
+     * 卸载按钮的点击事件
+     * @param pos 行下标
+     * @param packageName 包名
+     */
+    void onBtnClick(int pos, String packageName);
+}
+------------------------------------
+    /** 卸载接口 */
+    IUninstall uninstall;
+    /** Setter */
+    public void setUninstall(IUninstall uninstall) {
+        this.uninstall = uninstall;
+    }
+
+        // 注册按钮点击事件
+        final int pos = position;
+        final String packageName = app.packageName;
+        holder.btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uninstall.onBtnClick(pos, packageName);
+            }
+        });
+---------------------------------------------
+    @Override
+    public void onBtnClick(int pos, String packageName) {
+        // 打开系统卸载应用的界面
+        Utils.uninstallApk(this,packageName,REQUEST_CODE_UNINSTALL);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //接收卸载应用界面的返回结果,并刷新列表
+        if (resultCode == REQUEST_CODE_UNINSTALL){
+            updateData();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }

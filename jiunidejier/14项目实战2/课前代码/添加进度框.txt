@@ -1,0 +1,43 @@
+    //3.子线程
+    private void updateData() {
+        // 启动新线程,处理耗时操作
+        new Thread() {
+            public void run() {
+
+                list = Utils.getAppInfos(MainActivity.this);
+
+                try {
+                    Thread.sleep(2000);//模拟耗时操作;真机测试时请注释掉
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                adapter.setList(list);
+
+                handler.sendEmptyMessage(1);
+            };
+        }.start();
+        showProgressDialog();// 显示进度框
+    }
+
+    // 1声明进度框对象
+    ProgressDialog pd;
+    // 显示一个环形进度框
+    public void showProgressDialog() {
+        pd = new ProgressDialog(MainActivity.this);
+        pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        pd.setTitle("刷新列表");
+        pd.setMessage("请耐心等待");
+        pd.show();
+    }
+
+    // 2声明handler对象,处理子线程结束后,UI主线程的更新
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.what == 1) {
+                adapter.notifyDataSetChanged();// 通知数据跟新
+                pd.dismiss();// 关闭进度框
+            }
+        }
+    };

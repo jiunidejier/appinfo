@@ -1,0 +1,30 @@
+1. 导入图片,编写item标签以及点击事件
+    <!-- 刷新 -->
+    <item
+        android:id="@+id/btn_refresh"
+        android:title="刷新"
+        android:icon="@drawable/bottom_icon_refresh"
+        android:showAsAction="ifRoom" />
+------------------------------
+2. 在回退按钮事件中,编写更新业务逻辑
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 反射出菜单
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // 获取菜单项
+        MenuItem search = menu.findItem(R.id.search);
+        search.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                // 当展开时
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                // 当收起时
+                updateData();// 更新列表
+                return true;
+            }
+        });

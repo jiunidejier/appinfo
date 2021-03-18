@@ -1,0 +1,65 @@
+1. 添加SearchView
+ 
+   <!-- 搜索框-->
+    <item
+        android:id="@+id/search"
+        android:title="搜索"
+        android:icon="@drawable/title_search_normal"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:actionViewClass="android.widget.SearchView"
+        />
+
+-----------------------------
+2. 设置SearchView
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // 反射出菜单
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // 获取菜单项
+        MenuItem search = menu.findItem(R.id.search);
+
+        // 获取菜单中的搜索框
+        sv = (SearchView) search.getActionView();// 再从菜单中 反射出View
+
+        // 设置该SearchView显示搜索按钮
+        sv.setSubmitButtonEnabled(true);
+        // 设置该SearchView内默认显示的提示文本
+        sv.setQueryHint("查找应用名");
+
+       // 为该SearchView组件设置事件监听器
+        sv.setOnQueryTextListener(this);
+
+        return true;
+    }
+-------------------------------
+3. 编写搜索方法
+    /**
+     * 返回搜索集合
+     * @param list
+     * @param keyword 关键字
+     * @return
+     */
+    public static List<AppInfo> getSearchResult(List<AppInfo> list, String keyword){
+
+        // 返回结果集合
+        List<AppInfo> searchResultList = new ArrayList<AppInfo>();
+        for (int i = 0; i < list.size(); i++) {
+            AppInfo app = list.get(i);
+            if (app.AppName.toLowerCase().contains(keyword.toLowerCase())) {
+                searchResultList.add(app);
+            }//if
+        }//for
+        return searchResultList;
+    }
+------------------------------
+4. 调用搜索方法,显示结果
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+       
+        // 提交搜索关键字
+        list = Utils.getSearchResult(list,query);
+        updateData_sort(currSort);//显示搜索结果
+
+        return true;
+    }

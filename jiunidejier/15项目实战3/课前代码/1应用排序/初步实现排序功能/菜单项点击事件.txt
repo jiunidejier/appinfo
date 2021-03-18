@@ -1,0 +1,27 @@
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // 处理ActionBar的item点击事件
+        int id = item.getItemId();
+
+        Comparator<AppInfo> currComparator = null;
+        //判断菜单项的id
+        if (id == R.id.sort_name) {
+            currComparator = nameComparator;
+        }
+        if (id == R.id.sort_date) {
+            currComparator = dateComparator;
+        }
+        if (id == R.id.sort_size) {
+            currComparator = sizeComparator;
+        }
+        Collections.sort(list,currComparator);//排序
+        //更新应用列表
+        updateData_sort();
+
+        return true;
+    }
+    // 更新应用列表
+    private void updateData_sort() {
+        adapter.setList(list);
+        adapter.notifyDataSetChanged();
+    }

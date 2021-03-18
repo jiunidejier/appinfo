@@ -1,0 +1,8 @@
+package com.spl.appch5;
+
+/**
+ * Created by uilubo on 2015/9/18.
+ */
+public interface IControl {
+    void btnclick(int pos);
+}
